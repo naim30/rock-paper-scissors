@@ -1,13 +1,3 @@
 .App {
   text-align: center;
 }
-
-.Webcam {
-  position: absolute;
-  z-index: 9;
-}
-
-.Canvas {
-  position: absolute;
-  z-index: 9;
-}
