@@ -1,0 +1,6 @@
+.Board {
+  width: 100%;
+  padding: 20px 10%;
+  display: flex;
+  justify-content: space-between;
+}

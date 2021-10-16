@@ -1,0 +1,19 @@
+.Logo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.Logo > img {
+  padding: 5px;
+}
+
+.Logo > img:nth-child(1) {
+  height: 80%;
+}
+.Logo > img:nth-child(2) {
+  height: 65%;
+}
+.Logo > img:nth-child(3) {
+  height: 65%;
+}
