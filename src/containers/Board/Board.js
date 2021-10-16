@@ -12,13 +12,44 @@ import {
   scissorGesture,
   rockGesture,
 } from "../../Utility/gestures";
+import paperImg from "../../assets/images/paper.svg";
+import rockImg from "../../assets/images/rock.svg";
+import scissorImg from "../../assets/images/scissor.svg";
 
 class Board extends Component {
   state = {
-    startGame: true,
-    guessArr: [],
-    showResult: false,
+    startCounter: true,
+    counter: 10,
+    selectArr: [
+      { name: "rock", image: rockImg },
+      { name: "paper", image: paperImg },
+      { name: "scissor", image: scissorImg },
+    ],
+    guess: { name: "rock", image: rockImg },
   };
+
+  interval = null;
+
+  counterHandler = () => {
+    if (this.state.startCounter && this.state.counter === 10) {
+      console.log("hello");
+      this.interval = setInterval(() => {
+        if (this.state.counter > 1) {
+          this.setState((prevState) => {
+            return {
+              counter: prevState.counter - 1,
+            };
+          });
+        } else {
+          clearInterval(this.interval);
+        }
+      }, 1000);
+    }
+  };
+
+  componentDidMount() {
+    this.counterHandler();
+  }
 
   detect = async (model, webcamRef, canvasRef) => {
     if (webcamRef.current && webcamRef.current.video.readyState === 4) {
@@ -61,7 +92,7 @@ class Board extends Component {
   render() {
     return (
       <div className={classes.Board}>
-        <ComputerMoves />
+        <ComputerMoves counter={this.state.counter} guess={this.state.guess} />
         <UserMoves />
         {/* runHandPose={this.runHandPose} */}
       </div>

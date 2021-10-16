@@ -3,3 +3,10 @@
   margin: 3px;
   background-color: #2e3a539c;
 }
+
+.Counter {
+  font-weight: 600;
+  font-size: 30px;
+  color: #8592b49c;
+  padding: 10px;
+}
