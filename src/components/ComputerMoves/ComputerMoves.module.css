@@ -2,11 +2,26 @@
   width: 40%;
   margin: 3px;
   background-color: #2e3a539c;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .Counter {
   font-weight: 600;
-  font-size: 30px;
+  font-size: 40px;
+  color: #dbdbdb9c;
+  padding: 10px;
+}
+
+.ComputerMoves > img {
+  margin: 20px 0px;
+  height: 150px;
+}
+
+.Name {
+  font-weight: 600;
+  font-size: 20px;
   color: #8592b49c;
   padding: 10px;
 }

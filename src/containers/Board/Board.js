@@ -19,36 +19,69 @@ import scissorImg from "../../assets/images/scissor.svg";
 class Board extends Component {
   state = {
     startCounter: true,
-    counter: 10,
+    counter: 3,
     selectArr: [
       { name: "rock", image: rockImg },
       { name: "paper", image: paperImg },
       { name: "scissor", image: scissorImg },
     ],
     guess: { name: "rock", image: rockImg },
+    guessArr: [],
+    startGuess: false,
   };
 
   interval = null;
+  interval1 = null;
+  interval2 = null;
 
   counterHandler = () => {
-    if (this.state.startCounter && this.state.counter === 10) {
-      console.log("hello");
+    if (this.state.startCounter && this.state.counter === 3) {
       this.interval = setInterval(() => {
-        if (this.state.counter > 1) {
+        if (this.state.counter > 0) {
           this.setState((prevState) => {
             return {
               counter: prevState.counter - 1,
             };
           });
         } else {
+          this.setState({
+            startCounter: false,
+          });
           clearInterval(this.interval);
         }
       }, 1000);
     }
   };
 
+  changeImageHandler = () => {
+    if (this.state.startCounter && this.state.counter === 3) {
+      this.interval1 = setInterval(() => {
+        if (this.state.counter > 0) {
+          this.setState((prevState) => {
+            let guess = null;
+            while (1) {
+              let guessItem =
+                prevState.selectArr[
+                  Math.floor(Math.random() * prevState.selectArr.length)
+                ];
+              if (prevState.guess.name !== guessItem.name) {
+                guess = guessItem;
+                return {
+                  guess: guess,
+                };
+              }
+            }
+          });
+        } else {
+          clearInterval(this.interval1);
+        }
+      }, 100);
+    }
+  };
+
   componentDidMount() {
     this.counterHandler();
+    this.changeImageHandler();
   }
 
   detect = async (model, webcamRef, canvasRef) => {
@@ -64,7 +97,6 @@ class Board extends Component {
       canvasRef.current.height = videoHeight;
 
       const hand = await model.estimateHands(video);
-      // console.log(hand);
 
       if (hand.length > 0) {
         const GE = new fp.GestureEstimator([
@@ -75,6 +107,10 @@ class Board extends Component {
 
         const gesture = await GE.estimate(hand[0].landmarks, 8);
         console.log(gesture);
+
+        let guessArr = [...this.state.guessArr];
+        guessArr.push(gesture.gestures);
+        this.setState({ guessArr: guessArr });
       }
 
       const ctx = canvasRef.current.getContext("2d");
@@ -84,8 +120,12 @@ class Board extends Component {
 
   runHandPose = async (webcamRef, canvasRef) => {
     const model = await handpose.load();
-    setInterval(() => {
-      this.detect(model, webcamRef, canvasRef);
+    this.interval2 = setInterval(() => {
+      if (this.state.counter === 0 && this.state.guessArr.length < 20) {
+        this.detect(model, webcamRef, canvasRef);
+      } else {
+        clearInterval(this.interval2);
+      }
     }, 100);
   };
 
