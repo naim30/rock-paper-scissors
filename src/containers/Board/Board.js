@@ -28,6 +28,7 @@ class Board extends Component {
     guess: { name: "rock", image: rockImg },
     guessArr: [],
     startGuess: false,
+    modelLoad: false,
   };
 
   interval = null;
@@ -133,8 +134,7 @@ class Board extends Component {
     return (
       <div className={classes.Board}>
         <ComputerMoves counter={this.state.counter} guess={this.state.guess} />
-        <UserMoves />
-        {/* runHandPose={this.runHandPose} */}
+        <UserMoves runHandPose={this.runHandPose} />
       </div>
     );
   }

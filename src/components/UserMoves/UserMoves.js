@@ -7,11 +7,11 @@ const UserMoves = (props) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
-  //   props.runHandPose(webcamRef, canvasRef);
+  props.runHandPose(webcamRef, canvasRef);
 
   return (
     <div className={classes.UserMoves}>
-      {/* <Webcam ref={webcamRef} mirrored={true} className={classes.Webcam} /> */}
+      <Webcam ref={webcamRef} mirrored={true} className={classes.Webcam} />
       <canvas ref={canvasRef} className={classes.Canvas} />
     </div>
   );
